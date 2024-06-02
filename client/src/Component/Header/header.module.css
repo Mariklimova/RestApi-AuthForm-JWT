@@ -1,0 +1,10 @@
+.wrapper{
+    display: flex;
+    justify-content: center ;
+    margin: 24px 0;
+    font: 400 16px Inter;
+}
+
+/* Button {
+    font: 400 16px Inter;
+} */
