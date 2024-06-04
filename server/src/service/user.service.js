@@ -1,4 +1,10 @@
-const { createUserDB,getUserDB,getUserIdDB,deleteUserDB } = require("../repository/user.repository");
+const { createUserDB,getUserDB,getUserIdDB,deleteUserDB,authUserDB } = require("../repository/user.repository");
+
+const authUser = async (email, password) => {
+  const user = await authUserDB(email, password);
+  if(!user.length) throw new Error('You are not registred')
+  return user
+};
 
 const createUser = async (name, surname, email, password) => {
   const user = await createUserDB(name, surname, email, password);
@@ -27,4 +33,4 @@ async function deleteUser(id)
 }
 
 
-module.exports = {createUser, deleteUser,getUser,getUserId}
+module.exports = {createUser, deleteUser,getUser,getUserId,authUser}

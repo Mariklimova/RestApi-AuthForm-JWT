@@ -3,8 +3,20 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import style from './reg.module.css'
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Reg() {
+    const [data, setData] = useState({});
+
+    function getInp(e) {
+        setData({ ...data, [e.target.name]: e.target.value })
+    };
+
+    async function authUser() {
+        const response = await axios.post('http://localhost:3001/user',data);
+        console.log(response.data);
+    }
     return <>
         <Header />
         <div className={style.wrapper}>
@@ -14,17 +26,17 @@ function Reg() {
                 account through mail.</p>
 
             <div className={style.name_surname}>
-                <TextField className={style.name} id="outlined-basic" label="Your name" variant="outlined" />
-                <TextField className={style.surname} id="outlined-basic" label="Your surname" variant="outlined" />
+                <TextField onChange={getInp} name = 'name' className={style.name} id="outlined-basic" label="Your name" variant="outlined" />
+                <TextField onChange={getInp} name = 'surname' className={style.surname} id="outlined-basic" label="Your surname" variant="outlined" />
             </div>
             <>
-                <TextField className={style.email_pwd} id="outlined-basic" label="Your emali" variant="outlined" />
+                <TextField onChange={getInp} name='email' className={style.email_pwd} id="outlined-basic" label="Your emali" variant="outlined" />
             </>
             <>
-                <TextField className={style.email_pwd} id="outlined-basic" label="Your password & Must be at least 8 characters." variant="outlined" />
+                <TextField onChange={getInp} name='password' className={style.email_pwd} id="outlined-basic" label="Your password & Must be at least 8 characters." variant="outlined" />
             </>
             <div className={style.button}>
-                <Button variant="contained">Continue</Button>
+                <Button onClick = {authUser} variant="contained">Continue</Button>
             </div>
             <div className={style.link}>
                 <p>Already registered?

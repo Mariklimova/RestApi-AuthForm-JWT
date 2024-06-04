@@ -1,5 +1,13 @@
 const pool = require('../db')
 
+const authUserDB = async (email, password) => {
+    const client = await pool.connect();
+    const sql = "SELECT * from Users where email=$1 and password =$2 returning *";
+    const { rows } = await client.query(sql, [email, password]);
+    client.release();
+    return rows;
+};
+
 const createUserDB = async (name, surname, email, password) => {
     const client = await pool.connect();
     const sql = "INSERT INTO Users (name, surname, email, password) values ($1,$2,$3,$4) returning *";
@@ -37,4 +45,4 @@ async function deleteUserDB(id) {
 
 
 
-module.exports = { createUserDB, deleteUserDB,getUserDB,getUserIdDB }
+module.exports = { createUserDB, deleteUserDB,getUserDB,getUserIdDB,authUserDB }
